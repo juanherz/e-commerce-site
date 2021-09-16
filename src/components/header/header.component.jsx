@@ -3,23 +3,18 @@ import { BrowserRouter, Link } from "react-router-dom";
 import './header.styles.scss';
 import { ReactComponent as Logo} from '../../assets/crown.svg';
 import { auth } from "../../firebase/firebase.utils";
+import { connect } from "react-redux";
 
 const Header = ({currentUser}) => (
-
-    <div className='header'>
-        <BrowserRouter>
+        <div className='header'>
             <Link className='logo-container' to='/'>
                 <Logo className='logo'></Logo>
             </Link>
-        </BrowserRouter>
-            
-        <div className='options'>
-            <BrowserRouter>
+            <div className='options'>
                 <Link className='option' to='/shop'>
                     SHOP
                 </Link>
-            </BrowserRouter>
-            <BrowserRouter>
+            
                 <Link className='option' to='/shop'>
                     CONTACT
                 </Link>
@@ -29,10 +24,12 @@ const Header = ({currentUser}) => (
                     :
                     <Link className="option" to='/signin'>SIGN IN</Link>
                 }
-            </BrowserRouter>
-            
+            </div>
         </div>
-    </div>
-    
 )
-export default Header;
+
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+});
+
+export default connect(mapStateToProps)(Header);
